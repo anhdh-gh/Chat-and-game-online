@@ -156,6 +156,9 @@ public class LoginView extends View {
             return;
         }
         
+        this.user.setUsername(username);
+        this.user.setPassword(password);
+        
         controller.processLogin(new User(username, password));
     }//GEN-LAST:event_loginBtActionPerformed
 
