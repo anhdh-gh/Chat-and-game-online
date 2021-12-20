@@ -183,7 +183,7 @@ public class ServerThread extends Thread {
 
                         // Kiểm tra email có đúng hay không
                         else if(!userForgotPassword.getEmail().equals(userData.getEmail()))
-                            this.sendInvalid("Password không đúng", RequestType.User_ForgotPassword);
+                            this.sendInvalid("Email không đúng", RequestType.User_ForgotPassword);
 
                         // Validate thành công
                         else this.sendSuccess(userForgotPassword, "Password của bạn là: " + userForgotPassword.getPassword(), RequestType.User_ForgotPassword);
