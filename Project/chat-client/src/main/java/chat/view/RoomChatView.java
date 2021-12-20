@@ -3,7 +3,6 @@ package chat.view;
 import chat.controller.Controller;
 import chat.entities.Message;
 import chat.entities.Room;
-import chat.enumeration.TypeRoom;
 import java.awt.event.KeyEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -44,7 +43,9 @@ public class RoomChatView extends View {
         // Hiển thị message
         chatTextArea.setText("");
         this.room.getMessages().forEach(message -> {
-            chatTextArea.append("<< " + message.getUserSend().getNickname()+ " >>: " + message.getContent() + "\n");
+            chatTextArea.append("<< " + message.getUserSend().getNickname() + " (" + message.getCreateDate() + ")" +" >>: \n");
+            chatTextArea.append(message.getContent() + "\n");
+            chatTextArea.append("\n");
         });
         chatTextArea.setCaretPosition(chatTextArea.getDocument().getLength());
    
@@ -60,10 +61,11 @@ public class RoomChatView extends View {
                 this.btnDeleteRoom.setEnabled(true);
                 break;
             case Group:
-                // Members nào cũng có quyền exit
+                // Members nào cũng có quyền exit, edit
                 this.btnExitRoom.setEnabled(true);
+                this.btnEditRoom.setEnabled(true);
                 
-                // Nếu là chủ phòng mới enable nút delete và edit
+                // Nếu là chủ phòng mới enable nút delete
                 if(this.room.getOwner().getId() == this.controller.getCurrentUser().getId()) {
                     this.btnDeleteRoom.setEnabled(true);
                     this.btnEditRoom.setEnabled(true);

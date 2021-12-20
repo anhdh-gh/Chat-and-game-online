@@ -56,6 +56,17 @@ public class CreateEditRoomView extends View {
                     controller.getCurrentWiew().showError("Bạn không còn là thành viên của phòng");
                     return;
                 }
+                
+                this.btnAddMember.setEnabled(false);
+                this.btnRemoveMember.setEnabled(false);
+                // Nếu là thành viên của phòng thì có quyền thêm thành viên
+                this.btnAddMember.setEnabled(true);
+                
+                // Nếu là chủ phòng thì có quyền add, remove thành viên
+                if(this.room.getOwner().getId() == controller.getCurrentUser().getId()) {
+                    this.btnAddMember.setEnabled(true);
+                    this.btnRemoveMember.setEnabled(true);
+                }
                 break;
             }
         }
