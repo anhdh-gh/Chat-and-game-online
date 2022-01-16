@@ -2,7 +2,9 @@ package chat.view;
 
 import chat.controller.Controller;
 import chat.entities.Room;
+import java.awt.EventQueue;
 import javax.swing.table.*;
+import noughts_and_crosses.view.HomeFrame;
 
 public class HomeView extends View {
 
@@ -36,6 +38,7 @@ public class HomeView extends View {
         changeNickNameBt = new javax.swing.JButton();
         joinBt = new javax.swing.JButton();
         changePasswordBt = new javax.swing.JButton();
+        playGameBt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Chat app");
@@ -111,6 +114,14 @@ public class HomeView extends View {
             }
         });
 
+        playGameBt.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        playGameBt.setText("Play game");
+        playGameBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playGameBtActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,7 +138,8 @@ public class HomeView extends View {
                             .addComponent(changeNickNameBt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(changePasswordBt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(joinBt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(logOutBt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(logOutBt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(playGameBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -145,6 +157,8 @@ public class HomeView extends View {
                         .addComponent(changeNickNameBt)
                         .addGap(18, 18, 18)
                         .addComponent(changePasswordBt)
+                        .addGap(18, 18, 18)
+                        .addComponent(playGameBt)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(logOutBt))
                     .addComponent(jScrollPane1))
@@ -183,6 +197,12 @@ public class HomeView extends View {
         } 
         else this.showError("Bạn chưa chọn phòng");
     }//GEN-LAST:event_joinBtActionPerformed
+
+    private void playGameBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playGameBtActionPerformed
+        EventQueue.invokeLater(() -> {
+            new HomeFrame(this.controller.getCurrentUser().getNickname()).setVisible(true);
+        });
+    }//GEN-LAST:event_playGameBtActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton changeNickNameBt;
@@ -192,6 +212,7 @@ public class HomeView extends View {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton joinBt;
     private javax.swing.JButton logOutBt;
+    private javax.swing.JButton playGameBt;
     private javax.swing.JTable tableRooms;
     // End of variables declaration//GEN-END:variables
 }
