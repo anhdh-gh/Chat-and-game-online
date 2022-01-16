@@ -4,6 +4,8 @@ import chat.controller.Controller;
 import chat.entities.Message;
 import chat.entities.Room;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 
 public class RoomChatView extends View {
@@ -28,7 +30,7 @@ public class RoomChatView extends View {
         this.room = controller.getRoomByID(room.getId());
         if(this.room == null) {
             controller.showHomeView();
-            controller.getCurrentWiew().showError("Bạn không còn là thành viên của phòng");
+            controller.getCurrentView().showError("Bạn không còn là thành viên của phòng");
             return;
         }
         
@@ -90,6 +92,7 @@ public class RoomChatView extends View {
         btnDeleteRoom = new javax.swing.JButton();
         btnExitRoom = new javax.swing.JButton();
         backBt = new javax.swing.JButton();
+        chooseFile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tên room");
@@ -187,6 +190,14 @@ public class RoomChatView extends View {
             }
         });
 
+        chooseFile.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        chooseFile.setText("Choose file");
+        chooseFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -196,6 +207,8 @@ public class RoomChatView extends View {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(backBt)
+                        .addGap(281, 281, 281)
+                        .addComponent(chooseFile)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(logOutBt))
                     .addComponent(roomNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -236,7 +249,8 @@ public class RoomChatView extends View {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(logOutBt)
-                    .addComponent(backBt))
+                    .addComponent(backBt)
+                    .addComponent(chooseFile))
                 .addContainerGap())
         );
 
@@ -283,12 +297,17 @@ public class RoomChatView extends View {
             sendMessageBtn.doClick();
     }//GEN-LAST:event_messageTextFieldKeyPressed
 
+    private void chooseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFileActionPerformed
+        this.controller.sendFile(this.room, this.showSelectMultipleFiles("Send"));
+    }//GEN-LAST:event_chooseFileActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBt;
     private javax.swing.JButton btnDeleteRoom;
     private javax.swing.JButton btnEditRoom;
     private javax.swing.JButton btnExitRoom;
     private javax.swing.JTextArea chatTextArea;
+    private javax.swing.JButton chooseFile;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton logOutBt;

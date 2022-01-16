@@ -75,4 +75,14 @@ public enum RequestType implements Serializable {
     // Server thực hiện lưu message và gửi lại hết cho client trong phòng
     // CLient thực hiện render lại list message
     Message_Send,
+
+    // Client gửi 1 Pair<Room, List<FileInfo> lên serser
+    // Server thực hiện gửi lại cho tất cả những người đang online trong nhóm Room
+    // Server gửi lại thông báo gửi thành công bao nhiêu thành viên
+    File_Send,
+
+    // Server gửi 1 List<FileInfo> về cho client
+    // Client hỏi người dùng muốn lưu file không
+    // Nếu có thì chọn thư mục lưu
+    File_Receive
 }
