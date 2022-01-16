@@ -298,7 +298,9 @@ public class RoomChatView extends View {
     }//GEN-LAST:event_messageTextFieldKeyPressed
 
     private void chooseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFileActionPerformed
-        this.controller.sendFile(this.room, this.showSelectMultipleFiles("Send"));
+        File[] files = this.showSelectMultipleFiles("Send");
+        if(files.length > 0)
+            this.controller.sendFile(this.room, files);
     }//GEN-LAST:event_chooseFileActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
