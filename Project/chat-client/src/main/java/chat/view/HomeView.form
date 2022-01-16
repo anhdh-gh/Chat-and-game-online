@@ -37,6 +37,7 @@
                           <Component id="changePasswordBt" alignment="1" max="32767" attributes="0"/>
                           <Component id="joinBt" alignment="1" max="32767" attributes="0"/>
                           <Component id="logOutBt" alignment="1" max="32767" attributes="0"/>
+                          <Component id="playGameBt" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -59,6 +60,8 @@
                       <Component id="changeNickNameBt" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="changePasswordBt" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="playGameBt" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="logOutBt" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -171,6 +174,17 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changePasswordBtActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="playGameBt">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="14" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Play game"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playGameBtActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
