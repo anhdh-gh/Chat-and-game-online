@@ -37,6 +37,7 @@ import javafx.util.Pair;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.apache.commons.io.FilenameUtils;
 
 @Getter
 @Component
@@ -210,7 +211,13 @@ public class Controller extends Thread {
             try {
                 bis = new BufferedInputStream(new FileInputStream(file));
                 bis.read(fileBytes, 0, fileBytes.length);
-            } catch (FileNotFoundException ex) {} catch (IOException ex) {}
+            } catch (FileNotFoundException ex) {} catch (IOException ex) {
+            } finally{
+                try {
+                    if(bis != null)
+                        bis.close();
+                } catch (IOException ex) {}
+            }
             return new FileInfo(file.getName(), fileBytes); 
         }).collect(Collectors.toList());
         this.send(new ServiceResult(new Pair<>(room, fileInfos), RequestType.File_Send));
@@ -381,7 +388,15 @@ public class Controller extends Thread {
                             if(directory != null) {
                                 List<FileInfo> fileInfos = (List<FileInfo>) serviceResult.getData();
                                 fileInfos.forEach(fileInfo -> {
+                                    String nameFileSave = FilenameUtils.removeExtension(fileInfo.getFilename());
+                                    String extensionFileSave = FilenameUtils.getExtension(fileInfo.getFilename());
+                                    extensionFileSave = !extensionFileSave.trim().isEmpty() ? "." + extensionFileSave : ""; 
+                                    
                                     File fileSave = new File(directory + "\\" + fileInfo.getFilename());
+                                    
+                                    // Kiểm tra file đã tồn tại hay chưa, nếu tồn tại thì đổi tên file
+                                    for(int i = 1; fileSave.exists(); i++) 
+                                        fileSave = new File(directory + "\\" + nameFileSave + " (" + i + ")" + extensionFileSave);
                                     
                                     // Lưu file
                                     BufferedOutputStream bos = null;
