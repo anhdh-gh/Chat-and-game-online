@@ -1,10 +1,10 @@
-package noughts_and_crosses.view;
+package game.noughts_and_crosses.view;
 
 import java.awt.*;
 import java.net.*;
 import javax.swing.*;
 import java.util.logging.*;
-import noughts_and_crosses.support.Ip;
+import game.noughts_and_crosses.support.Ip;
 
 public class HomeFrame extends JFrame {
 
@@ -25,8 +25,8 @@ public class HomeFrame extends JFrame {
 
         center = new javax.swing.JLabel();
         bottom = new javax.swing.JPanel();
+        backbt = new javax.swing.JButton();
         createButton = new javax.swing.JButton();
-        nameLable = new javax.swing.JLabel();
         joinButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -36,6 +36,17 @@ public class HomeFrame extends JFrame {
         getContentPane().add(center, java.awt.BorderLayout.CENTER);
 
         bottom.setBackground(new java.awt.Color(0, 0, 0));
+
+        backbt.setBackground(new java.awt.Color(255, 255, 255));
+        backbt.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        backbt.setForeground(new java.awt.Color(0, 0, 0));
+        backbt.setText("◀ Back");
+        backbt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backbtActionPerformed(evt);
+            }
+        });
+        bottom.add(backbt);
 
         createButton.setBackground(new java.awt.Color(255, 255, 255));
         createButton.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -47,12 +58,6 @@ public class HomeFrame extends JFrame {
             }
         });
         bottom.add(createButton);
-
-        nameLable.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        nameLable.setForeground(new java.awt.Color(255, 255, 255));
-        nameLable.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        nameLable.setText("Noughts and crosses");
-        bottom.add(nameLable);
 
         joinButton.setBackground(new java.awt.Color(255, 255, 255));
         joinButton.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -88,6 +93,10 @@ public class HomeFrame extends JFrame {
         dispose();        
     }//GEN-LAST:event_joinButtonActionPerformed
 
+    private void backbtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbtActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_backbtActionPerformed
+
     public JButton getCreateButton() {
         return createButton;
     }
@@ -97,10 +106,10 @@ public class HomeFrame extends JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backbt;
     private javax.swing.JPanel bottom;
     private javax.swing.JLabel center;
     private javax.swing.JButton createButton;
     private javax.swing.JButton joinButton;
-    private javax.swing.JLabel nameLable;
     // End of variables declaration//GEN-END:variables
 }

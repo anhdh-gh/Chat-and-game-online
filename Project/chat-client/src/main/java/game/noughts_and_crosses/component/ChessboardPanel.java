@@ -1,4 +1,4 @@
-package noughts_and_crosses.component;
+package game.noughts_and_crosses.component;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,8 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import noughts_and_crosses.support.Button;
-import noughts_and_crosses.support.Exchangers;
+import game.noughts_and_crosses.support.Exchangers;
+import game.support.Button;
 
 public class ChessboardPanel extends JPanel implements ActionListener {
 

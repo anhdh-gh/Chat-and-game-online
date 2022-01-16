@@ -1,4 +1,4 @@
-package noughts_and_crosses.support;
+package game.support;
 
 import java.awt.*;
 import javax.swing.*;

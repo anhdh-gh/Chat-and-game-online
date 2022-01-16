@@ -1,4 +1,4 @@
-package noughts_and_crosses.server;
+package game.noughts_and_crosses.server;
 
 import java.io.*;
 import java.net.*;

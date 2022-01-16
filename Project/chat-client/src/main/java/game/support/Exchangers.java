@@ -1,4 +1,4 @@
-package noughts_and_crosses.support;
+package game.noughts_and_crosses.support;
 
 import java.io.*;
 import java.net.*;

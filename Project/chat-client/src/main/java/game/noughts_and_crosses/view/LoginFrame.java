@@ -1,6 +1,6 @@
-package noughts_and_crosses.view;
+package game.noughts_and_crosses.view;
 
-import exception.LoginException;
+import game.noughts_and_crosses.exception.LoginException;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import noughts_and_crosses.server.Server;
+import game.noughts_and_crosses.server.Server;
 
 public class LoginFrame extends JFrame implements Runnable {
 

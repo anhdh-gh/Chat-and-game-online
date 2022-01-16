@@ -1,4 +1,4 @@
-package exception;
+package game.noughts_and_crosses.exception;
 
 public class LoginException extends Exception {
 

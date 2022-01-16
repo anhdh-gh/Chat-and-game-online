@@ -1,10 +1,10 @@
-package noughts_and_crosses.server;
+package game.noughts_and_crosses.server;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import noughts_and_crosses.support.Exchangers;
+import game.noughts_and_crosses.support.Exchangers;
 
 public class ServerThread extends Thread {
 

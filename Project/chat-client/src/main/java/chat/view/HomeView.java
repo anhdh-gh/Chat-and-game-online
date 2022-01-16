@@ -2,9 +2,8 @@ package chat.view;
 
 import chat.controller.Controller;
 import chat.entities.Room;
-import java.awt.EventQueue;
+import game.main.Main;
 import javax.swing.table.*;
-import noughts_and_crosses.view.HomeFrame;
 
 public class HomeView extends View {
 
@@ -199,9 +198,7 @@ public class HomeView extends View {
     }//GEN-LAST:event_joinBtActionPerformed
 
     private void playGameBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playGameBtActionPerformed
-        EventQueue.invokeLater(() -> {
-            new HomeFrame(this.controller.getCurrentUser().getNickname()).setVisible(true);
-        });
+        new Main(this.controller.getCurrentUser().getNickname()).setVisible(true);
     }//GEN-LAST:event_playGameBtActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

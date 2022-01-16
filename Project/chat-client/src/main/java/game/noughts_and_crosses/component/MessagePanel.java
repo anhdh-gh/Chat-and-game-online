@@ -1,4 +1,4 @@
-package noughts_and_crosses.component;
+package game.noughts_and_crosses.component;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -6,8 +6,8 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
-import noughts_and_crosses.support.Exchangers;
-import noughts_and_crosses.view.ClientFrame;
+import game.noughts_and_crosses.support.Exchangers;
+import game.noughts_and_crosses.view.ClientFrame;
 
 public class MessagePanel extends JPanel {
     
