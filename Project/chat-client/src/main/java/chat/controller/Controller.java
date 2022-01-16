@@ -2,6 +2,7 @@ package chat.controller;
 
 import chat.client.Client;
 import chat.common.ServiceResult;
+import chat.entities.FileInfo;
 import chat.entities.Message;
 import chat.entities.Room;
 import chat.entities.User;
@@ -17,12 +18,22 @@ import chat.view.LoginView;
 import chat.view.RoomChatView;
 import chat.view.RegisterView;
 import chat.view.View;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import javafx.util.Pair;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,7 +45,7 @@ public class Controller extends Thread {
     @Autowired
     private Client client;
     
-    private View currentWiew;
+    private View currentView;
     private User currentUser; // Phải là một đối tượng user đầy đủ 
     private List<User> users; // Tât cả user có trong hệ thống 
 
@@ -43,8 +54,8 @@ public class Controller extends Thread {
             this.client.send(object);
         } catch (IOException ex) {
             System.out.println("ERROR: Gửi Object bị lỗi");
-            currentWiew.showError("Lỗi kết nối với server");
-            currentWiew.deleteView();
+            currentView.showError("Lỗi kết nối với server");
+            currentView.deleteView();
             this.client.closeAll();
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -55,8 +66,8 @@ public class Controller extends Thread {
             return this.client.receive();
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("ERROR: Nhận Object bị lỗi");
-            currentWiew.showError("Lỗi kết nối với server");
-            currentWiew.deleteView();
+            currentView.showError("Lỗi kết nối với server");
+            currentView.deleteView();
             this.client.closeAll();
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,10 +75,10 @@ public class Controller extends Thread {
     }   
     
     private void showView(View view) {
-        if(currentWiew != null) currentWiew.deleteView();
-        this.currentWiew = view;
+        if(currentView != null) currentView.deleteView();
+        this.currentView = view;
         this.refresh();
-        currentWiew.displayView();
+        currentView.displayView();
     }
     
     public void processRegister(User user) {
@@ -191,12 +202,26 @@ public class Controller extends Thread {
             });
     }
     
+    // Send file
+    public void sendFile(Room room, File[] files) {
+        List<FileInfo> fileInfos = Arrays.asList(files).stream().map(file -> {
+            BufferedInputStream bis = null;
+            byte[] fileBytes = new byte[(int) file.length()];
+            try {
+                bis = new BufferedInputStream(new FileInputStream(file));
+                bis.read(fileBytes, 0, fileBytes.length);
+            } catch (FileNotFoundException ex) {} catch (IOException ex) {}
+            return new FileInfo(file.getName(), fileBytes); 
+        }).collect(Collectors.toList());
+        this.send(new ServiceResult(new Pair<>(room, fileInfos), RequestType.File_Send));
+    }
+    
     // Refresh
     private void refresh() {
         // Chuyển đổi lại name của room
         this.convertRoomName();
         // Render lại view hiện tại
-        this.currentWiew.renderView();       
+        this.currentView.renderView();       
     }
     
     // Lắng nghe server thay đổi và cập nhật lại dữ liệu
@@ -220,43 +245,43 @@ public class Controller extends Thread {
                 
                 case User_Register: {
                     if(status == Status.Invalid || status == Status.Error)
-                        currentWiew.showError(message);
+                        currentView.showError(message);
                     else {
                         User user = (User) serviceResult.getData();
                         this.showLoginView(user);
-                        currentWiew.showSuccess(message);
+                        currentView.showSuccess(message);
                     }
                     break;
                 }
                 
                 case User_Login: {
                     if(status == Status.Invalid || status == Status.Error)
-                        currentWiew.showError(message);
+                        currentView.showError(message);
                     else {
                         this.currentUser = (User) serviceResult.getData();
                         this.showHomeView();
-                        currentWiew.showSuccess(message);
+                        currentView.showSuccess(message);
                     }
                     break;
                 }
                 
                 case User_ForgotPassword: {
                     if(status == Status.Invalid || status == Status.Error)
-                        currentWiew.showError(message);
+                        currentView.showError(message);
                     else {
                         User user = (User) serviceResult.getData();
                         this.showLoginView(user);
-                        currentWiew.showSuccess(message);
+                        currentView.showSuccess(message);
                     }
                     break;
                 }
                 
                 case User_LogOut: {
                     if(status == Status.Invalid || status == Status.Error)
-                        currentWiew.showError(message);
+                        currentView.showError(message);
                     else {
                         this.showLoginView(this.currentUser);
-                        currentWiew.showSuccess(message);
+                        currentView.showSuccess(message);
                         this.currentUser = null;
                         this.users = null;
                     }
@@ -265,35 +290,35 @@ public class Controller extends Thread {
                 
                 case User_ChangePassword: {
                     if(status == Status.Invalid || status == Status.Error)
-                        currentWiew.showError(message);
+                        currentView.showError(message);
                     else {
                         this.currentUser = (User) serviceResult.getData();
                         this.showHomeView();
-                        currentWiew.showSuccess(message);
+                        currentView.showSuccess(message);
                     }                    
                     break;
                 }
                 
                 case User_ChangeNickname: {
                     if(status == Status.Invalid || status == Status.Error)
-                        currentWiew.showError(message);  
+                        currentView.showError(message);  
                     else {
                         this.currentUser = (User) serviceResult.getData();
                         this.showHomeView();
-                        currentWiew.showSuccess(message);
+                        currentView.showSuccess(message);
                     }
                     break;
                 }
                 
                 case Room_Create: {
                     if(status == Status.Invalid || status == Status.Error)
-                        currentWiew.showError(message); 
+                        currentView.showError(message); 
                     else {
                         Room room = (Room) serviceResult.getData();
                         // Hiển thị phòng chat
                         this.showRoomChatView(room);
                         // Hiển thị thông báo
-                        currentWiew.showSuccess(message);
+                        currentView.showSuccess(message);
                     }
                     
                     break;
@@ -301,38 +326,84 @@ public class Controller extends Thread {
                 
                 case Room_Update: {
                     if(status == Status.Invalid || status == Status.Error)
-                        currentWiew.showError(message); 
+                        currentView.showError(message); 
                     else {
                         Room room = (Room) serviceResult.getData();
                         this.showRoomChatView(room);
-                        currentWiew.showSuccess(message);
+                        currentView.showSuccess(message);
                     }
                     break;
                 }
                 
                 case User_ExitRoom: {
                     if(status == Status.Invalid || status == Status.Error)
-                        currentWiew.showError(message); 
+                        currentView.showError(message); 
                     else {
                         this.showHomeView();
-                        currentWiew.showSuccess(message);
+                        currentView.showSuccess(message);
                     }
                     break;
                 }
                 
                 case Delete_Room: {
                     if(status == Status.Invalid || status == Status.Error)
-                        currentWiew.showError(message); 
+                        currentView.showError(message); 
                     else {
                         this.showHomeView();
-                        currentWiew.showSuccess(message);
+                        currentView.showSuccess(message);
                     }
                     break;
                 }
                 
                 case Message_Send: {
                     if(status == Status.Invalid || status == Status.Error)
-                        currentWiew.showError(message); 
+                        currentView.showError(message); 
+                    break;
+                }
+                
+                case File_Send: {
+                    if(status == Status.Invalid || status == Status.Error)
+                        currentView.showError(message); 
+                    else if(status == Status.Success)
+                        currentView.showSuccess(message);
+                    
+                    break;
+                }
+                
+                case File_Receive: {
+                    if(status == Status.Invalid || status == Status.Error)
+                        currentView.showError(message); 
+                    else if(status == Status.Success) {
+                        int choose = this.currentView.showConfirm(message);
+                        if(choose == 0) {
+                            String directory = this.currentView.showSelectDirectory("Save folder");
+                            AtomicInteger countSuccess = new AtomicInteger(); 
+                            if(directory != null) {
+                                List<FileInfo> fileInfos = (List<FileInfo>) serviceResult.getData();
+                                fileInfos.forEach(fileInfo -> {
+                                    File fileSave = new File(directory + "\\" + fileInfo.getFilename());
+                                    
+                                    // Lưu file
+                                    BufferedOutputStream bos = null;
+                                    try {
+                                        
+                                        bos =  new BufferedOutputStream(new FileOutputStream(fileSave));
+                                        bos.write(fileInfo.getDataBytes());
+                                        bos.flush();
+                                        countSuccess.getAndIncrement();
+                                    } catch (FileNotFoundException ex) {} catch (IOException ex) {
+                                    } finally {
+                                        try {
+                                            if (bos != null)
+                                            bos.close();
+                                        } catch (IOException ex) {}
+                                    }
+                                });
+                                
+                                this.currentView.showSuccess("Lưu thành công " + countSuccess.get() + " files");
+                            }
+                        }
+                    }
                     break;
                 }
             }

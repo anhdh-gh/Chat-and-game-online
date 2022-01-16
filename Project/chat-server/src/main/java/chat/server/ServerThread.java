@@ -1,14 +1,17 @@
 package chat.server;
 
 import chat.common.ServiceResult;
+import chat.entities.FileInfo;
 import chat.entities.Message;
 import chat.entities.Room;
 import chat.entities.User;
 import chat.enumeration.RequestType;
 import chat.enumeration.Status;
 import chat.service.Service;
+import javafx.util.Pair;
 import lombok.Data;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -16,6 +19,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -417,6 +421,33 @@ public class ServerThread extends Thread {
                             server.refreshAll();
                         }
 
+                        break;
+                    }
+
+                    case File_Send: {
+                        Pair<Room, List<FileInfo>> data = (Pair<Room, List<FileInfo>>) serviceResult.getData();
+
+                        // Lấy ra tất cả những người trong phòng theo room và lọc ra những người đang online
+                        Room room = data.getKey();
+                        List<User> members = this.service.getRoomByID(room.getId()).getMembers();
+
+                        // Gửi file
+                        List<FileInfo> fileInfos = data.getValue();
+                        User user = this.service.getUserByID(this.currentUserID);
+
+                        AtomicInteger countSuccess = new AtomicInteger();
+                        this.server
+                            .getServerThreads()
+                            .stream()
+                            .filter(serverThread -> members.stream().anyMatch(member -> member.getId() == serverThread.getCurrentUserID() && member.getId() != this.currentUserID))
+                            .forEach(serverThread -> {
+                                try {
+                                    serverThread.sendSuccess(fileInfos, user.getNickname() + " đã gửi " + fileInfos.size() + " files cho bạn, bạn có muốn lưu không?", RequestType.File_Receive);
+                                    countSuccess.getAndIncrement();
+                                } catch (IOException e) {}
+                            });
+
+                        this.sendSuccess("Đã gửi thành công cho " + countSuccess.get() + " thành viên", RequestType.File_Send);
                         break;
                     }
                 }

@@ -53,7 +53,7 @@ public class CreateEditRoomView extends View {
                 this.room = controller.getRoomByID(room.getId());
                 if(this.room == null) {
                     controller.showHomeView();
-                    controller.getCurrentWiew().showError("Bạn không còn là thành viên của phòng");
+                    controller.getCurrentView().showError("Bạn không còn là thành viên của phòng");
                     return;
                 }
                 
