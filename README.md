@@ -1,4 +1,4 @@
-## Ứng dụng destop chat và chơi game online
+## Ứng dụng desktop chat và chơi game online
 ## Công nghệ sử dụng
 - Spring Data JPA
 - Java Socket
