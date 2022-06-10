@@ -1,5 +1,4 @@
-## Chat-online
-Xây dựng ứng ứng dụng chat online dùng Spring Data JPA và Java socket, Java Swing. "chat-server" mở bằng intellij, "chat-client" mở bằng netbeans
+## Ứng dụng destop chat và chơi game online dùng Spring Data JPA và Java socket, Java Swing. "chat-server" mở bằng intellij, "chat-client" mở bằng netbeans
 ## Công nghệ sử dụng
 - Spring Data JPA
 - Java Socket
