@@ -1,10 +1,13 @@
-## Ứng dụng destop chat và chơi game online dùng Spring Data JPA và Java socket, Java Swing. "chat-server" mở bằng intellij, "chat-client" mở bằng netbeans
+## Ứng dụng destop chat và chơi game online
 ## Công nghệ sử dụng
 - Spring Data JPA
 - Java Socket
 - Java Multi Thread
 - Java Swing
 - MYSQL
+## Hướng dẫn run code
+- "chat-server" mở bằng intellij
+- "chat-client" mở bằng netbeans
 ## Hình ảnh preview
 
 ### Giao diện đăng ký:
