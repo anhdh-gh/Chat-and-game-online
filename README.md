@@ -5,6 +5,25 @@
 - Java Multi Thread
 - Java Swing
 - MYSQL
+- Visual Paradigm
+
+## Các biểu đồ
+
+### Biểu đồ Usecase
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/79781308/175532903-495be2ca-7cf2-4b1e-b175-40caec31b50e.png"/>
+</p>
+
+### Biểu đồ Class
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/79781308/175533304-cf7c8d11-7569-4207-8b9f-3b8fa9adb203.png"/>
+</p>
+
+### Biểu đồ ERD
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/79781308/175533007-4c9a8779-16b1-4b8f-b802-002876092ec7.png"/>
+</p>
+
 ## Hướng dẫn run code
 - "chat-server" mở bằng intellij
 - "chat-client" mở bằng netbeans
